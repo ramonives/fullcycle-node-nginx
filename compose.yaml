@@ -1,0 +1,44 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - server
+    networks:
+      - fullcycle-network
+
+  server:
+    build:
+      context: .
+    container_name: fullcycle-node-app
+    ports:
+      - 3000:3000
+    networks:
+      - fullcycle-network
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DB=fullcycle
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fullcycle
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    networks:
+      - fullcycle-network
+
+networks:
+  fullcycle-network:
+    driver: bridge    
+

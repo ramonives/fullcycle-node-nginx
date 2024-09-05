@@ -4,7 +4,7 @@ const mysql = require('mysql')
 const port = 3000
 
 const config = {
-  host: 'mysql',
+  host: 'db',
   user: 'root',
   password: 'root',
   database: 'fullcycle'

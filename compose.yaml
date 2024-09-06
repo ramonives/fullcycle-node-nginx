@@ -21,7 +21,7 @@ services:
       context: .
     container_name: fullcycle-node-app
     volumes:
-      - /usr/src/app
+      - ./:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 3000:3000
